@@ -1,0 +1,4 @@
+# Copy to db.properties and enter the instructor-provided lab account.
+url=jdbc:mysql://127.0.0.1:3306/coms211_task_lab
+user=REPLACE_WITH_LAB_USER
+password=REPLACE_WITH_LAB_PASSWORD
