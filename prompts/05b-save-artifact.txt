@@ -1,0 +1,4 @@
+Two reported corrections are still absent from the actual test file. Read it and fix only these:
+1. Copying schema SQL into a Java string still duplicates it. In setUp, read db/schema.sql from disk (for example Files.readString(Path.of("db/schema.sql"))), split its statements and execute them. Include necessary imports/checked exceptions. Use H2 MODE=MySQL.
+2. In testDuplicateMoveRejected, the attempted duplicate still passes IN_PROGRESS. Change only that attempted outcome to HUMAN_WINS while retaining the assertion that the stored outcome remains IN_PROGRESS.
+Preserve other assertions/source. Use replace_text, run mvn -o test, and stop with an accurate brief report.

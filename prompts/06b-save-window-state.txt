@@ -1,0 +1,7 @@
+The current window still has concrete defects. Read the actual current file and use focused replace_text edits; don't rewrite it all.
+1. Remove the placeholder check of whether cell 0 is occupied. Retry eligibility is simply: an active saved game exists, status is IN_PROGRESS, and current player is COMPUTER. Use that condition directly, regardless of board position.
+2. Disable an empty board button when there is no saved game ID, the game is finished (neither GAME_NOT_STARTED nor IN_PROGRESS), or it is O's turn. Occupied buttons are always disabled. This fixes pre-start and terminal input too.
+3. In the move SQLException catch, call updateUI FIRST, then set the error label, so updateUI cannot erase the error. Retry failure must leave the retry option available if O is still pending.
+4. Close the properties input stream with try-with-resources, and replace the startup Exit button's System.exit with Platform.exit so Application.stop closes the owned connection. Make the startup error label wrap so it fits.
+5. Remove the unsupported COMPLETED annotation from MANUAL-CHECKS.md. No actual UI check has been performed; source implementation and backend passing tests are not manual verification.
+Do not change service/repository/tests. Run mvn -o test, report actual counts and pending manual UI verification, then stop. No placeholders or claims of unperformed checks.

@@ -1,0 +1,6 @@
+Review the repository against the existing game model and actual schema. Make these bounded corrections before proceeding:
+- Use one consistent representation: players X=1 and O=-1, opponent modes random/stronger, and outcomes IN_PROGRESS/HUMAN_WINS/COMPUTER_WINS/DRAW. Reject other player/outcome/mode values and move numbers outside 1–9 before writing. Correct the new test fixtures that currently use player 2, modes human/computer, and lowercase outcomes; preserve the behavioral assertions.
+- In repository tests execute actual db/schema.sql with H2 MySQL mode, rather than another duplicated schema definition.
+- For duplicate rejection, don't depend on the capitalization or wording of a vendor's SQL exception message. Check a real SQLException and verify the game's move count and previous outcome remain unchanged. Use a different attempted outcome so the no-partial-change assertion is meaningful.
+- Add a relevant SQL failure test, such as using a closed test connection; do not read real credentials or change the window.
+Use focused edits, preserve existing tests, run mvn -o test, and stop with actual results and remaining limits. If another error remains, report it accurately rather than claiming success.

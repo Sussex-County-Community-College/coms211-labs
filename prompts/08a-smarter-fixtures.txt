@@ -1,0 +1,5 @@
+Correct ONLY these three test method bodies; prior feedback changed comments/assertions but left the actual move sequences wrong.
+- testSelectStrongMoveImmediateWin: the ACTUAL makeMove sequence must be 0,3,1,4,8; expect selected=5. Snapshot board/turn/status before selection and assert unchanged. Then assertTrue(makeMove(selected)) and COMPUTER_WINS.
+- testSelectStrongMoveBlockWin: ACTUAL sequence 0,4,1; expect selected=2. Assert unchanged state before applying the selected move, then assert it applies as O at 2 and status remains IN_PROGRESS.
+- testSelectStrongMoveFallbackToRandom: ACTUAL sequence only makeMove(4). Use a fixed Random; require valid empty selection and unchanged full board/turn/status. No leftover makeMove(0) or second move.
+Preserve all other tests/source and correct mismatched fixture comments. Use real newlines/quotes and focused replacements. Run mvn -o test; if anything fails, report the exact failure and STOP without another broad rewrite. No new debug files.

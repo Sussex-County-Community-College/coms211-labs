@@ -1,0 +1,6 @@
+Build a small playable JavaFX GameWindow using the existing game rules and random opponent. Show nine board buttons, a clear status, and a New Game control. The human plays X first; each legal human move is followed by one computer move unless the game has ended. Occupied cells and finished games cannot accept moves. Show human win, computer win, or draw. New Game restores an empty board. Keep game decisions in the existing backend classes. No database or history yet.
+Preserve and run backend tests. Add tests only for new backend behavior if needed; do not introduce a GUI test framework. Write a short manual UI checklist and clearly mark checks you have not actually performed. Stop after this step.
+
+The scaffold test currently calls the placeholder main method. When replacing the placeholder with JavaFX, adapt that smoke test to check entry-point structure without launching a GUI event loop during unit tests. Preserve all game/opponent behavior assertions.
+
+Keep explanations brief. Finish with three short sentences: changes, observed test result/count, and checks still pending.

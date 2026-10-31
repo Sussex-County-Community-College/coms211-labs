@@ -1,0 +1,6 @@
+The latest selector's pure win check fixes the status-mutation bug, but four added fixtures still use the wrong turn. Correct only this stronger-selector increment:
+- NotComputersTurn: make TWO legal moves so it is X's turn; then expect -1.
+- ImmediateWin: use 0,3,1,4,8, expect 5. Snapshot board/turn/status before selecting; assert all unchanged, then apply the selected move and assert COMPUTER_WINS.
+- BlockWin: use 0,4,1, expect 2. It is O's turn after three moves, not four.
+- Fallback: use only X at 4. Require a legal EMPTY position, not assertFalse(isPositionEmpty). Preserve board/turn/status.
+Use the existing random injection pattern: change selectStrongMove to accept Random and pass it to random fallback instead of creating a new random source inside. Update the new tests to use fixed Random values/seeds. Keep all original rule/random/replay tests intact. Delete the exploratory GameModelDebugTest created in this stage. Do not weaken turn checks or change UI/service/storage. Read actual files, make focused corrections, run mvn -o test, report accurately and stop.

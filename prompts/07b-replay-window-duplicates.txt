@@ -1,0 +1,1 @@
+Remove only the SECOND duplicate stop() override from GameWindow, keeping exactly one connection-cleanup override. Use replace_text with occurrence=2 when the complete identical method occurs twice, or include unique surrounding context. Do not change other methods, tests or documentation yet. Run mvn -o test, report the actual result briefly, then stop.

@@ -1,0 +1,6 @@
+Finish the persistence window step. Keep GameRepository(Connection) and the accepted service APIs.
+- Own the JDBC Connection as a window field and close it in Application.stop(); load properties with a closed input stream. Never read actual credentials through agent tools.
+- Show useful startup feedback in the UI for missing settings/connection failure, then exit gracefully so the user can fix settings and restart. Don't rely only on console output or System.exit. Use the plain title Tic-Tac-Toe.
+- Add a clearly labeled Retry Computer Move control. Enable it only when a saved game is in progress and O is pending; it calls the service's makeComputerMove. A failed O save must keep the committed X visible and allow retry. Disable board input while O is pending, before New Game creates a record, and after game over. Failed new-game creation preserves the current board.
+- On errors render the service's committed state and show an honest error message; do not overwrite errors with a success/status refresh.
+Update README operational setup and MANUAL-CHECKS.md, preserving licensing and distinguishing unperformed checks. Run backend tests without launching the GUI and stop. No service/repository changes or new GUI testing framework.

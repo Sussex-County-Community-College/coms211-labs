@@ -1,0 +1,3 @@
+Add only a simple computer opponent that chooses a random legal move. Keep selection separate from applying the move, so the game model remains responsible for rules. Never choose an occupied or out-of-range position, never mutate the game merely by selecting, and handle a full or finished board clearly. Allow repeatable tests using a supplied random source or another equally small approach. Add focused tests against real opponent code, preserving existing tests. Do not add UI, storage, or smarter play. Run tests and stop.
+
+Keep explanations brief. Finish with three short sentences: changes, observed test result/count, and checks still pending.

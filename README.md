@@ -1,38 +1,33 @@
-# Task Tracker starter
+# Tic-tac-toe — instructor development reference
 
-A small OpenJFX application for the COMS211 supervised feature lab. The starter adds and lists tasks; students implement mark complete. See requirements.md and AGENTS.md.
+COMS211 Software Engineering with AI, Sussex County Community College.
 
-## Prerequisites
+A small JavaFX game in which human X plays computer O. Random chooses a legal move; Stronger takes an immediate win, otherwise blocks an immediate loss, otherwise chooses a legal move. Each new game and accepted move is stored through JDBC in MySQL. Saved Games opens a menu of recorded games. Selection starts an empty replay board; each Right Arrow reveals one recorded move. Replay is read-only.
 
-Use the instructor-prepared Linux VM: JDK 21 or later, Maven 3.9, MySQL, Workbench, Eclipse, Git/GitHub Desktop, and Codex configured with Qwen. OpenJFX is a Maven dependency; no separate JavaFX SDK installation is required. The instructor prepares the Maven dependency cache in the appliance; network access is needed only if dependencies are missing or must be refreshed. Report missing tools to the instructor rather than installing replacements.
+This branch contains the reference produced by an instructor-operated Qwen experiment, not an empty student starter or a finished graded lab. See [recorded prompts](PROMPTS.md), [requirements](requirements.md), [development outline](LAB.md), and [verification limits](MANUAL-CHECKS.md).
 
-## Setup
+## Build and run
 
-1. Open your private `coms211-labs-private` repository in GitHub Desktop. Save and commit unfinished work on its current branch, Fetch origin, then select **Current Branch > task-tracker**. Pull updates before starting if offered; ask for help if the branch is missing or a conflict occurs. Do not create an empty lab branch. Open this same folder in Codex. In Eclipse use **File > Import > Maven > Existing Maven Projects** and select the folder containing this `pom.xml`; refresh if already imported. Your clone may live under `~/GitHub` or `~/eclipse-workspace`. Use the existing clone rather than making a second repository.
-2. The instructor prepares the practice database using db/schema.sql and db/reset.sql and provides a dedicated account restricted to SELECT, INSERT, UPDATE, DELETE on coms211_task_lab.*. Check the supplied connection in Workbench. Ask for help if it fails. The application never needs administrator privileges.
-3. Check that the instructor-provided local db.properties file is present. If missing, copy db.properties.example to db.properties and enter the supplied local account values yourself. The file is ignored by Git; do not send it to Codex or include it in screenshots. Java properties use backslash escapes; ask the instructor for help if supplied credentials contain backslashes.
-4. In a terminal opened in the project root, run `java -version`, `mvn -version`, then `mvn clean test`. Confirm Maven uses JDK 21 or later. The baseline has four test methods.
-5. Run `mvn javafx:run`. Add a task, select Refresh, close the window, then run it again. Confirm the task persists. The window should show each task's ID, status, and title.
-6. In Workbench, run `SELECT id, title, completed FROM coms211_task_lab.tasks ORDER BY id;` and compare with the window.
-7. Review changed files in GitHub Desktop. Verify db.properties is absent and Current Branch is task-tracker. Record the supplied baseline commit; commit a new baseline only if you made instructor-approved tracked changes. Keep feature commits on task-tracker and push them to your private origin before submitting.
+Use the instructor-prepared Linux VM with Maven, Java 21 or later, MySQL, and the prepared dependency cache. Maven compiles for Java release 21. This experiment used Eclipse's bundled Java 25 runtime; a Java 21 runtime walkthrough remains pending. JavaFX is a Maven dependency; no separate SDK is needed.
 
-In Eclipse, right-click the project > Run As > Maven build… with Goals `clean test`. Expect BUILD SUCCESS and four baseline test methods. Create a second Maven run configuration with Goals `javafx:run`; its base directory must be the project root. If settings are unavailable, check that db.properties is beside pom.xml with nonblank url, user, and password values, then restart. Eclipse can use its bundled Maven. For terminal use, open a new terminal after the instructor configures Maven and JAVA_HOME.
+1. The instructor prepares a dedicated `coms211_tictactoe_lab` database and an application account with SELECT, INSERT and UPDATE on that schema. Apply [db/schema.sql](db/schema.sql) only to that database. The script creates tables without deleting existing data; database selection is supplied by the client. Never apply it to another schema.
+2. Copy [db.properties.example](db.properties.example) to local `db.properties` and enter the supplied connection values yourself. Required keys are `db.url`, `db.username`, and `db.password`. Keep credentials out of agent tools, Git, screenshots, and evidence. The local file and inherited private backups are ignored. Ask for help with Java-properties escaping if a supplied value contains backslashes.
+3. In the project root run `mvn -o clean test`. Expected current result: 77 tests, no failures/errors/skips. If prepared dependencies are missing, ask the instructor before changing tools or versions.
+4. Run `mvn -o javafx:run`. Choose **Next opponent**, then **New Game**. The choice affects the next game; it does not change a game already in progress. Place X in an empty cell; O responds automatically.
+5. Open **Saved Games**, select a record, and press **Right Arrow** once per move. At the end the recorded outcome is shown. **New Game** returns to live play.
 
-## Architecture
+In Eclipse, import **Maven > Existing Maven Projects** using the folder containing pom.xml. Use Maven goals `clean test` for checks and `javafx:run` for the application, with the project root as base directory.
 
-TaskWindow is the JavaFX interface. TaskService validates input. TaskRepository defines the storage operations; JdbcTaskRepository implements them with JDBC. Task represents one database row. The starter performs short local database calls on the JavaFX thread to keep the example small; slow/unavailable connections can temporarily freeze the interface. Record this limitation during validation; responsive background work is outside this feature.
+## Architecture and checks
 
-## Repeatable checks
+`GameModel` owns rules and move selection. `LiveGameService` builds a candidate from saved history and publishes it only after a successful save. `GameRepository` uses prepared SQL and a transaction for one move plus outcome. `Game`/`Move` are immutable data objects. `ReplayModel` loads metadata/history and steps without writes or opponent selection. `GameWindow` owns the JDBC connection and UI controls.
 
-Run `mvn clean test` for service unit tests and `mvn javafx:run` for the application. Unit tests use an in-memory stand-in; they do not establish database or UI correctness. Use the lab's evidence table for independent MySQL and interface checks.
+Tests exercise real rules/selectors/service and real JDBC with test-only H2. The backend round-trip test verifies exact saved moves, H2 file connection restart, every replay prefix, unchanged stored history, and actual stronger blocking. H2 mode does not establish MySQL/JDBC compatibility. Source review and backend tests do not verify mouse/keyboard interaction. See [MANUAL-CHECKS.md](MANUAL-CHECKS.md) before any student release.
 
-## Recovery
+## Recovery and known limits
 
-- Build failure: check the project folder, JDK shown by Maven, and first error. Preserve a sanitized error summary. Ask the instructor if dependencies cannot download.
-- Connection failure: check MySQL in Workbench, local settings, and the selected lab database. Do not post credentials. Use Refresh after recovery or restart after editing settings.
-- Unwanted change: inspect GitHub Desktop's diff. Copy wanted work aside, then discard only the selected unwanted changes. Do not discard the entire repository or rewrite history. Git recovery does not undo database changes.
-- Practice-data reset: back up wanted rows first. Ask the instructor to run db/reset.sql; it deletes only records in coms211_task_lab.tasks and inserts two examples. Never run it against another database.
+Missing settings/connection at launch shows startup feedback; correct local setup and restart. A failed human save leaves the committed board unchanged. If O is pending after a failed save, **Retry Computer Move** retries that turn. A failed New Game leaves the previous game active. A broken connection may require fixing MySQL and restarting the application; this version does not reconnect automatically or resume an unfinished live game after restart. Incomplete saved games remain available for historical replay.
 
-## Licensing
+Database work runs on the JavaFX thread, so a slow/unavailable server can pause the window. History assumes valid application-generated move order. Listing has no explicit ID tiebreak for equal timestamps. Detailed student scaffolding, grading, desktop-agent validation, live MySQL play and visual/accessibility walkthroughs remain future work.
 
-Original Java and SQL: MIT, see LICENSE-CODE. Original instructional prose: CC BY-NC 4.0, see LICENSE-CONTENT. Third-party dependencies retain their own licenses. No third-party instructional text or source code is copied into this starter.
+Original Java/SQL: MIT ([LICENSE-CODE](LICENSE-CODE)). Original instructional prose/prompts: CC BY-NC 4.0 ([LICENSE-CONTENT](LICENSE-CONTENT)). Dependencies retain their own licenses. No third-party instructional content was adopted.

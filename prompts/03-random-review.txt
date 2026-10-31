@@ -1,0 +1,7 @@
+Stop the repair loop and make only these focused corrections. Keep selectRandomMove's current contract: return -1 before the game starts or after it ends; during play return an empty position without changing the model.
+1. testSelectRandomMoveEmptyBoard currently contradicts testSelectRandomMoveGameNotStarted. Both fresh-game cases must expect -1, not a legal position. Keep the legal-position checks in the partial-board test after X has moved.
+2. Use the already verified draw move sequence 0,1,2,4,3,5,7,6,8 in the full-board fixture; the ascending 0..8 sequence is NOT a draw.
+3. Replace the tautology (move1 == move3 || move1 != move3) with actual legal-position checks. Add an assertion that selecting a move leaves board and turn unchanged.
+4. Delete the exploratory SimpleTest.java file; retain all substantive tests. Do not change rules or add more debug files.
+Run mvn -o test; if it fails, report the exact failure and stop. Finish in three short sentences.
+The partial-board check was weakened to allow -1 and skip legality checks. Restore the requirement that an in-progress game with empty cells MUST return a legal position, then directly check that position is empty and not occupied. Use replace_text for focused edits after reading the actual current file. Do not rewrite the whole test class.

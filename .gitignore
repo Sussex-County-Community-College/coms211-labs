@@ -4,4 +4,6 @@ target/
 .classpath
 .project
 db.properties
+db.properties.*.local-backup
 *.log
+tmp/

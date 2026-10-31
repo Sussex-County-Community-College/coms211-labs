@@ -1,0 +1,4 @@
+Delete the unaccepted LiveGameServiceIntegrationTest.java and create BackendRoundTripTest.java with ONE small real-JDBC integration test. Keep every other file unchanged.
+Create a fresh H2 file in @TempDir, execute actual db/schema.sql, use the real GameRepository and LiveGameService. Supply a Random subclass whose nextInt returns 2. Call startGame("random"), makeHumanMove(0), makeComputerMove(), asserting both moves succeed.
+The exact board must now be [1,0,0,-1,0,0,0,0,0]: X at0, O at3, position2 EMPTY. Read saved history and assert exactly two moves: positions0,3, players1,-1, move numbers1,2. Read the game row and assert mode random/outcome IN_PROGRESS. Close resources.
+Do not add further moves, restart, replay, debug scenarios, or production changes yet. Do not read/reuse the deleted bad test. Run mvn -o test after writing; if it fails report the exact error and STOP without weakening these requirements.

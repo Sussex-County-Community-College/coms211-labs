@@ -1,0 +1,5 @@
+Do only the remaining replay rendering/key fixes in GameWindow.
+Keep ONE key handler: for Right Arrow in replay mode, step at most once if hasMoreMoves, call updateUI after that step, and consume the event. If there are no more moves, do not change board or message.
+In updateUI, after rendering the chosen board, handle replay in one early branch: disable retry/all board buttons; if hasMoreMoves show stepping instructions, otherwise show getOriginalOutcome immediately; then return before live-game status logic. This must show the saved outcome for empty/unfinished games too. Remove startReplay's unconditional instruction message after updateUI, and request root focus after a successful selection.
+Set statusLabel preferred width 360 with wrapping. During board rendering use setAccessibleText to name each row, column and current mark/empty state; keep visual cells showing only X/O/empty.
+Do not change working menu callbacks, service, repository, tests or other behaviors. Use focused edits with actual newlines/quotes, run mvn -o test, briefly report results and unperformed UI checks, then stop.

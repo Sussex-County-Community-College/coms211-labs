@@ -1,0 +1,7 @@
+The window needs focused corrections before acceptance. Read the actual current files, then use replace_text for small edits.
+- A fresh/reset GameModel has GAME_NOT_STARTED. handleHumanMove currently requires IN_PROGRESS, so the first click is rejected forever. Permit a legal human first move and an in-progress human turn, while still rejecting terminal games and occupied cells.
+- Make occupied/finished board buttons visibly disabled, and re-enable empty cells for a new game.
+- The 200-pixel scene is narrower than the board plus padding. Use a window layout sized to fit its content, with readable labels and controls.
+- Remove the production main method's special test argument. Adapt the scaffold smoke test to inspect Application inheritance and the public static main(String[]) signature using reflection; never call launch/main in a unit test.
+- Add the requested manual checklist, explicitly marked unperformed.
+Preserve backend source/tests. Run mvn -o test and stop after reporting actual counts and pending UI checks. Do not claim manual UI verification.
