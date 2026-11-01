@@ -27,8 +27,8 @@ directions, submission requirements, and the branch to select.
 | `task-tracker` | Java application practice involving a user interface, application logic, and persistent data. |
 | `tictactoe` | Instructor development reference for a Java tic-tac-toe application; use only when directed. |
 
-The `environment-intro` and `ai-intro` branches initially contain only this
-overview. Their lab materials are still being prepared.
+The `environment-intro` and `ai-intro` branches contain their practice projects
+and local instructions. Canvas supplies each lab assignment and rubric.
 
 ## Working on a lab
 
