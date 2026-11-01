@@ -1,45 +1,85 @@
-# COMS211 Software Engineering with AI
+# Module 2: Exploring Qwen in LM Studio and Codex
 
-Sussex County Community College
+COMS211 Software Engineering with AI — Sussex County Community College.
 
-COMS211 introduces software engineering practices using Java and AI-assisted
-development. Students practice requirements, design, implementation, testing,
-version control, documentation, and software review. Students learn to specify,
-supervise, and verify work completed with an AI coding agent.
+Use Canvas for the full lab and rubric. Work in your existing private
+`coms211-private` repository on branch `ai-intro`. Save and commit Module 1 work
+before switching. This branch starts from a fresh copy of the familiar program;
+its heading is intentionally back to `COMS211 greeting practice`.
 
-> Students may delegate implementation, but not responsibility.
+## Start and establish a baseline
 
-## How this repository is organized
+Use the supplied Linux VM, Java 21 or later, Maven and prepared dependency cache.
+In the private project root beside pom.xml run:
 
-This repository uses separate branches to support course labs. A branch is a
-named version of the repository. Selecting a different branch changes the files
-shown in your working folder.
+```bash
+pwd
+mvn -o clean package
+java -jar target/coms211-greeting.jar
+java -jar target/coms211-greeting.jar Maya
+java -jar target/coms211-greeting.jar ""
+java -jar target/coms211-greeting.jar "  Maya  "
+```
 
-The `main` branch contains this course overview. Each lab branch provides the
-files for its activity as they are developed. Follow Canvas for assignment
-directions, submission requirements, and the branch to select.
+Expect three passing baseline tests. The no-argument run prints the heading and
+`Hello, student!`. Blank and padded arguments are not yet validated or trimmed.
+Record the actual baseline output before authorizing a change.
 
-| Branch | Purpose |
-| --- | --- |
-| `main` | Course overview and guide to the lab branches. |
-| `environment-intro` | Module 1: explore the development environment and practice building, running, testing, and version control without AI. |
-| `ai-intro` | Module 2: explore Qwen in LM Studio and Codex, check explanations, and supervise a small repository change. |
-| `task-tracker` | Java application practice involving a user interface, application logic, and persistent data. |
-| `tictactoe` | Instructor development reference for a Java tic-tac-toe application; use only when directed. |
+## Explore, inspect, plan, act, verify
 
-The `environment-intro` and `ai-intro` branches contain their practice projects
-and local instructions. Canvas supplies each lab assignment and rubric.
+1. In Windows LM Studio, use `exercises/lm-studio.md` for short chat experiments.
+   Work with the prepared Qwen model/settings; no download or tuning is assigned.
+2. Back in Ubuntu, open this same private folder in Codex. Ask the instructor to
+   confirm the prepared Qwen provider/model selection and correlate a request
+   with activity in the host's LM Studio server. A successful LM Studio chat or
+   an agent's self-description does not by itself verify this connection.
+3. Send `prompts/01-inspect.txt`. Locate the reported files yourself. The first
+   stage permits no edits. Check GitHub Desktop for unexpected changes.
+4. Read `requirements.md`, `DESIGN.md` and `TEST-PLAN.md`. Copy
+   `EVIDENCE-TEMPLATE.md` to `notes/ai-report.md`; write expected results yourself.
+5. Send `prompts/02-plan.txt`. Review scope, behavior and planned checks before
+   approving implementation. Clarify a substantive mismatch with the agent.
+6. When ready, send `prompts/03-act.txt`. Inspect the complete diff, including
+   test assertions. Run the build yourself and check the console cases below.
+7. Accept, revise or reject using evidence. If revision is needed, describe the
+   specific failed criterion and authorize one correction within the same scope.
+   Ask for help if work stalls; keep the failed attempt and sanitized error.
+8. Write your own report. Add "After review" notes to DESIGN.md and TEST-PLAN.md
+   describing actual structure/checks and remaining limitations. Inspect all
+   changed files, commit accepted work and push to your private ai-intro branch.
 
-## Working on a lab
+## Independent console checks after implementation
 
-1. Follow the course setup directions to create your private `coms211-private`
-   repository from the instructor-prepared starter.
-2. Open your private working repository in GitHub Desktop.
-3. Save and commit unfinished work before switching branches. Ask for help if
-   you are unsure how to preserve it.
-4. Select the branch named in the assignment using **Current Branch**.
-5. Read that branch's README and the Canvas assignment before starting.
+Rebuild with `mvn -o clean package`, then run:
 
-Use the same working folder in Eclipse, GitHub Desktop, and, when the lab permits
-AI, Codex. Keep passwords, access tokens, and private information out of commits
-and AI conversations.
+```bash
+java -jar target/coms211-greeting.jar Maya
+java -jar target/coms211-greeting.jar "Grace Hopper"
+java -jar target/coms211-greeting.jar ""
+java -jar target/coms211-greeting.jar "   "
+java -jar target/coms211-greeting.jar "  Maya  "
+java -jar target/coms211-greeting.jar
+```
+
+Every run keeps the heading. Ordinary names keep their greeting. Empty and
+spaces-only names show `Please enter a name.` without a greeting or stack trace.
+The padded name becomes `Hello, Maya!`. No argument still greets `student`.
+Expected test count after the feature depends on the tests added: record the
+actual total and inspect whether their assertions cover the requirements.
+
+## Recovery and boundaries
+
+Missing branch: ask the instructor to transfer it to your private copy; Fetch
+origin alone does not copy instructor-repository branches. Connection failure:
+confirm the host model/server and prepared VM provider with the instructor; do
+not change networking, credentials or providers yourself. Cache/tool failure:
+record the first useful error without installing replacements. Wrong source
+change: inspect and preserve work before deciding what to restore. Do not
+weaken supplied tests or discard the whole working tree.
+
+Keep Qwen chats short and tasks small. Share only fictional practice content.
+The agent may assist with the authorized code/tests, but your evidence,
+explanations and acceptance decision must be your own.
+
+Original code: MIT (`LICENSE-CODE`). Original prose: CC BY-NC 4.0
+(`LICENSE-CONTENT`). Third-party tools/model weights retain their own licenses.

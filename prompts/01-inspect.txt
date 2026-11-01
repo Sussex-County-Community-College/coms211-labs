@@ -1,0 +1,6 @@
+Read AGENTS.md and the project README, requirements.md, DESIGN.md, TEST-PLAN.md,
+source and supplied tests. Do not edit any files or run a build yet. Explain what
+the current application actually does, name its two application classes, and
+identify the build/run commands. Distinguish current behavior from the proposed
+blank-name requirements. Identify what the existing tests do and do not check.
+Stop after your report.

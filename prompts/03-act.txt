@@ -1,0 +1,7 @@
+Implement only the blank-name increment from requirements.md using the reviewed
+plan and AGENTS.md boundaries. Preserve all original tests. Add meaningful tests
+in GreeterValidationTest that call the actual Greeter.greet method and check the
+required values or exception and message. Run mvn -o clean package. Report the
+changed files, actual commands/results/test totals, failures and checks still
+needed. Stop for my source review and independent console checks. Do not commit,
+push, modify documentation or write my report.

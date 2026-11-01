@@ -1,0 +1,5 @@
+Propose a short plan for only the blank-name increment in requirements.md.
+Use the supplied design and test plan, preserve the existing public method
+signature and starter tests, and stay within AGENTS.md's permitted files.
+List the expected behavior and meaningful new test cases before implementation.
+Do not edit files or run commands. Stop after the plan for my review.
