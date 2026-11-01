@@ -10,6 +10,10 @@ validate or trim the name. The three original tests check ordinary names only.
 
 ## Authorized increment: handle blank names
 
+Whitespace includes spaces and tabs. An exception is Java's signal that an
+operation cannot complete normally; IllegalArgumentException signals an invalid
+method argument. The console handles that signal and displays the message.
+
 1. `Greeter.greet(String name)` must reject the empty string and whitespace-only
    strings with `IllegalArgumentException("Please enter a name.")`.
 2. For a nonblank name, remove surrounding whitespace and return
