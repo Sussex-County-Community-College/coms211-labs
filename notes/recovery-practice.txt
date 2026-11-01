@@ -1,0 +1,2 @@
+This file is used only for the uncommitted-edit recovery exercise.
+The original second line is still here.

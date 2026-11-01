@@ -1,45 +1,93 @@
-# COMS211 Software Engineering with AI
+# Module 1: Development Environment Introduction
 
-Sussex County Community College
+COMS211 Software Engineering with AI — Sussex County Community College.
 
-COMS211 introduces software engineering practices using Java and AI-assisted
-development. Students practice requirements, design, implementation, testing,
-version control, documentation, and software review. Students learn to specify,
-supervise, and verify work completed with an AI coding agent.
+**Complete this lab without AI assistance.** Follow the Canvas assignment,
+instructor demonstration and these build instructions. This is a supplied
+practice program, not the semester project.
 
-> Students may delegate implementation, but not responsibility.
+## Start in the correct working copy
 
-## How this repository is organized
+The instructor starter is `~/GitHub/coms211-labs`. Your work belongs in your
+private `~/GitHub/coms211-private` repository on branch `environment-intro`.
+The instructor prepares the branches and dependency cache before class.
 
-This repository uses separate branches to support course labs. A branch is a
-named version of the repository. Selecting a different branch changes the files
-shown in your working folder.
+First-time setup only: from the clean instructor starter, select
+`environment-intro`, then run `bash scripts/create_student_repo.sh`. Read the
+account/destination summary before confirming with your own GitHub username.
+The script creates your private copy, invites `jsissler` and opens the clone on
+`main`. In GitHub Desktop, add that private local repository, then select
+`environment-intro`. If a private repository or destination folder already
+exists, preserve it and ask for help; do not rerun the creation script.
 
-The `main` branch contains this course overview. Each lab branch provides the
-files for its activity as they are developed. Follow Canvas for assignment
-directions, submission requirements, and the branch to select.
+## Build, test and run
 
-| Branch | Purpose |
-| --- | --- |
-| `main` | Course overview and guide to the lab branches. |
-| `environment-intro` | Module 1: explore the development environment and practice building, running, testing, and version control without AI. |
-| `ai-intro` | Module 2: explore Qwen in LM Studio and Codex, check explanations, and supervise a small repository change. |
-| `task-tracker` | Java application practice involving a user interface, application logic, and persistent data. |
-| `tictactoe` | Instructor development reference for a Java tic-tac-toe application; use only when directed. |
+Use the supplied Linux VM, Java 21 or later, and prepared Maven installation.
+Open a terminal in the private project root, beside `pom.xml`:
 
-The `environment-intro` and `ai-intro` branches contain their practice projects
-and local instructions. Canvas supplies each lab assignment and rubric.
+```bash
+pwd
+java -version
+mvn -version
+mvn -o clean package
+java -jar target/coms211-greeting.jar
+java -jar target/coms211-greeting.jar Maya
+java -jar target/coms211-greeting.jar "Grace Hopper"
+```
 
-## Working on a lab
+The clean build should report **3 tests, zero failures/errors/skips**, followed
+by BUILD SUCCESS. `-o` uses the prepared local dependency cache. If a dependency
+is missing, ask the instructor to prepare it; do not change versions.
 
-1. Follow the course setup directions to create your private `coms211-private`
-   repository from the instructor-prepared starter.
-2. Open your private working repository in GitHub Desktop.
-3. Save and commit unfinished work before switching branches. Ask for help if
-   you are unsure how to preserve it.
-4. Select the branch named in the assignment using **Current Branch**.
-5. Read that branch's README and the Canvas assignment before starting.
+The no-argument run prints:
 
-Use the same working folder in Eclipse, GitHub Desktop, and, when the lab permits
-AI, Codex. Keep passwords, access tokens, and private information out of commits
-and AI conversations.
+```text
+COMS211 greeting practice
+Hello, student!
+```
+
+The Maya run ends with `Hello, Maya!`; the quoted full name ends with
+`Hello, Grace Hopper!`. Quotes keep a full name together as one argument.
+Rebuild after a source edit before running the JAR again.
+
+## Files and the manual change
+
+- `GreetingApp.java`: selects a name and displays the heading and greeting.
+- `Greeter.java`: produces the greeting string.
+- `GreeterTest.java`: three supplied checks of the greeting method.
+- `pom.xml`: repeatable build, test dependency and runnable JAR configuration.
+- `.gitignore`: keeps generated `target/` and local editor/settings files out
+  of commits. Do not edit it for the exercise.
+- `notes/recovery-practice.txt`: safe file for practicing recovery of one edit.
+- `EVIDENCE-TEMPLATE.md`: copy into `notes/environment-report.md` and complete.
+
+Import the existing project into Eclipse with **File > Import > Maven > Existing
+Maven Projects**, selecting your private folder. Eclipse and GitHub Desktop
+must use the same working copy. Refresh the project if external edits are stale.
+
+Manual task: in `GreetingApp.java`, change only the displayed heading from
+`COMS211 greeting practice` to `COMS211 environment check`. Save, inspect the
+one-line diff, rebuild and run. The greeting stays the same. The supplied tests
+check greeting text, so you must separately observe the changed heading.
+
+Recovery task: while the program change is saved, add a temporary third line to
+`notes/recovery-practice.txt`. In GitHub Desktop inspect that file, then discard
+**only that file's uncommitted change**, confirming the selected filename first.
+Verify its original two lines return and your program change remains. Do not
+choose Discard All Changes. Ask for help if the selected file is ambiguous.
+
+Commit the reviewed program change and your report on `environment-intro`, push,
+and confirm the branch/commit in your private GitHub repository. If recording
+the final commit ID in the report requires another commit, identify the earlier
+code commit; do not attempt to put a commit's own ID inside itself.
+
+## Recovery and boundaries
+
+Wrong folder/branch: stop and preserve work. Missing tools/cache: record the
+first useful error and ask the instructor. Missing branch in a private copy:
+ask the instructor to transfer it; Fetch origin alone does not copy branches
+from the instructor's separate repository. Build output is generated; do not
+commit `target/`. This lab uses no database, model service or network API.
+
+Original code: MIT (`LICENSE-CODE`). Original prose: CC BY-NC 4.0
+(`LICENSE-CONTENT`). Third-party tools and dependencies retain their licenses.
